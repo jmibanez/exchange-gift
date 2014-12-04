@@ -1,0 +1,22 @@
+{% extends "admin_base.html" %}
+{% block title %}Admin: Match List{% endblock %}
+{% block container_content %}
+
+<h1>Match List</h1>
+
+    <h2>Codenames</h2>
+
+    <ul>{% for match in match_list %}
+      <li>{{ match.giver.get().codename }} --&gt; {{ match.receiver.get().codename }}</li>
+    {% endfor %}</ul>
+
+
+    <h2>Actual (Admin Use Only)</h2>
+
+    <ul>{% for match in match_list %}
+      <li>{{ match.giver.get().user.nickname() }} ({{ match.giver.get().user.email() }}) --&gt; {{ match.receiver.get().user.nickname() }} ({{ match.receiver.get().user.email() }})</li>
+    {% endfor %}</ul>
+
+    <p>From here you can <a href="{{ url_for('.send_matches') }}">send emails</a>, or <a href="{{ url_for('.do_matching') }}">reshuffle and regenerate the match list</a>. You can also go <a href="{{ url_for('.admin_root') }}">back to admin</a>.</p>
+
+{% endblock %}

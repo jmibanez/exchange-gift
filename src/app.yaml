@@ -1,0 +1,22 @@
+application: codeflux-gifts
+version: 1
+runtime: python27
+threadsafe: true
+api_version: 1
+
+builtins:
+  - appstats: on
+
+libraries:
+- name: yaml
+  version: "3.10"
+
+handlers:
+- url: /admin/.*
+  script: gifts2.app
+  secure: always
+  login: admin
+- url: .*
+  script: gifts2.app
+  secure: always
+  login: required

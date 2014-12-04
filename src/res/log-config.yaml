@@ -1,0 +1,9 @@
+incremental: True
+root:
+  level: INFO
+  propagate: true
+
+loggers:
+  gifts2:
+    level: DEBUG
+    propagate: true
