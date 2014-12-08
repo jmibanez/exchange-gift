@@ -1,5 +1,7 @@
 from google.appengine.ext import ndb
 from google.appengine.api import users, mail, memcache
+from google.appengine.api.app_identity import get_application_id
+
 from gifts2.models import Registration, RegistrationMatches, UserMeta, WishList
 
 import logging
@@ -11,6 +13,8 @@ import pickle
 REGISTRATION_LIST_KEY = "registration_list(%s)"
 REGISTRATION_MATCH_LIST_KEY = "matches(%s)"
 METADATA_KEY = "meta(%s)"
+
+MAIL_FROM_TEMPLATE = "%%s@%s.appspotmail.com" % get_application_id()
 
 def get_registration(user):
     r_str = memcache.get("registration(%s)" % user)
@@ -194,7 +198,7 @@ def do_send_match_email(item, reg, match_giver_givermap):
     taker_wish     = item['taker_wish']
     giver_giver_codename = match_giver_givermap[email]
 
-    mail.send_mail(sender = 'somebody@teamcodeflux.com',
+    mail.send_mail(sender = MAIL_FROM_TEMPLATE % "matching-elves",
                    to = email,
                    subject = 'Exchange Gift Match!',
                    body = """
