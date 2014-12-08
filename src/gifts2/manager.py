@@ -31,8 +31,13 @@ def get_registration(user):
         raise "Invalid data store state"
 
 def register_user(user, reg_form):
+    do_register_user(user, reg_form.cleaned_data['codename'])
+
+def do_register_user(user, codename):
     year = str(datetime.date.today().year)
-    r = Registration(year = year, user = user, codename = reg_form.cleaned_data['codename'])
+    r = Registration(year=year,
+                     user=user,
+                     codename=codename)
     r.put()
 
     memcache.set("registration(%s)" % user, pickle.dumps(r), time=3600)
@@ -103,6 +108,14 @@ def lookup_meta(user):
         return meta
     else:
         return None
+
+def bulk_register_users_from_list(user_list):
+    for user_tuple in user_list:
+        email = user_tuple[0]
+        codename = user_tuple[1]
+        user = users.User(email=email)
+        do_register_user(user, codename)
+
 
 def save_user_metadata(user, sex):
     q = UserMeta.query()

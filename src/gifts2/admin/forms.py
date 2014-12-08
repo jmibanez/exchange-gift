@@ -10,6 +10,6 @@ from gifts2 import models
 class RegistrationForm(Form):
     codename = TextField('Your "codename"', validators=[Required()])
 
-class MetadataUploadForm(Form):
-    file_uploaded = FileField('Metadata File')
+class UploadForm(Form):
+    file_uploaded = FileField('File')
 
