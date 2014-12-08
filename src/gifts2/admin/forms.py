@@ -9,6 +9,7 @@ from gifts2 import models
 
 class RegistrationForm(Form):
     codename = TextField('Your "codename"', validators=[Required()])
+    wishlist = TextAreaField('Your wishlist')
 
 class UploadForm(Form):
     file_uploaded = FileField('File')
